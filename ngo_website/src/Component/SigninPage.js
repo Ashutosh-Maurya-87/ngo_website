@@ -1,0 +1,216 @@
+import React, { useState } from "react";
+
+import "./Style.css";
+import { Box, Button, FormControl, Grid, IconButton, InputAdornment, InputLabel, Link, OutlinedInput, TextField, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import NgoBackgroundImage from '../Assets/ngo_background_image.jpg'
+const SignInPage = () => {
+  // React States
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [validData, setValidData] = useState(false)
+  const [errorMessages, setErrorMessages] = useState({});
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+  const userFormData = localStorage.getItem(('registrationFormData'))
+  const formData = JSON.parse(userFormData)
+  console.log('userData', JSON.parse(userFormData))
+  // User Login info
+  const database = [
+    {
+      username: formData?.email || formData?.mobileNumber,
+      password: formData?.password
+    },
+    // {
+    //   username: "user2",
+    //   password: "pass2"
+    // }
+  ];
+
+  const errors = {
+    uname: "invalid username or password",
+    pass: "invalid password"
+  };
+
+  const handleSubmit = (event) => {
+    //Prevent page reload
+    event.preventDefault();
+    console.log('entered valie os', userName, password)
+    // Find user login info
+    const userData = database.find((user) => {
+      console.log('user', user)
+      return user.username === (formData?.email || formData?.mobileNumber)
+    });
+    console.log('userddd', userData)
+    // Compare user info
+    if ((userData?.username === userName)) {
+      if (userData?.password === password) {
+        setIsSubmitted(true)
+        navigate('/home')
+        sessionStorage.setItem('isLogin', Boolean(true))
+        console.log('yaha nh aa rha', password)
+      } else {
+        setErrorMessages({ name: 'pass', message: errors.pass })
+        console.log('yaha aa rha', password)
+
+      }
+    } else {
+      setErrorMessages({ name: "uname", message: errors?.uname });
+    }
+    // if (userData) {
+    //   if (userData.password !== formData?.password) {
+    //     // Invalid password
+    //     setErrorMessages({ name: "pass", message: errors?.pass });
+    //   } else {
+    //     setIsSubmitted(true);
+    //   }
+    // } else {
+    //   // Username not found
+    //   setErrorMessages({ name: "uname", message: errors?.uname });
+    // }
+  };
+
+  // Generate JSX code for error message
+  const renderErrorMessage = (name) =>
+    name === errorMessages.name && (
+      <Box className="error">{errorMessages.message}</Box>
+    );
+
+  // JSX code for login form
+  const renderForm = (
+    <Box className="form">
+      <Box component='form' onSubmit={(e) => handleSubmit(e)}>
+        {/* <Box className="input-container">
+          <label>Username </label>
+          <input type="text" name="uname" required />
+        </Box> */}
+
+        <Box >
+          <FormControl
+            sx={{
+              m: 1,
+              width: '100%',
+              borderRadius: '10px'
+            }}
+            variant="outlined"
+            required
+          // error={nameError}
+          >
+            <InputLabel htmlFor="outlined-adornment-email">Enter email/mobile number</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-email"
+              type={'text'}
+              label="Enter email/mobile nunber"
+              value={userName}
+              onChange={(e) => setUserName(e?.target?.value)}
+            />
+          </FormControl>
+
+          {/* <Typography sx={{ color: 'red', fontSize: '16px', px: 2 }}>{error?.name}</Typography> */}
+        </Box>
+        <Box>
+          <FormControl
+            sx={{ m: 1, width: '100%' }}
+            variant="outlined"
+            required
+          // error={passwordError}
+          >
+            <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+            <OutlinedInput
+              id="outlined-adornment-password"
+              type={showPassword ? 'text' : 'password'}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              value={password}
+
+              onChange={(e) => setPassword(e?.target?.value)}
+
+              label="Password"
+            />
+            {renderErrorMessage("pass")}
+
+          </FormControl>
+
+        </Box>
+        {renderErrorMessage("uname")}
+
+        {/* <Box className="input-container">
+          <label>Password </label>
+          <input type="password" name="pass" required />
+          {renderErrorMessage("pass")}
+        </Box> */}
+        <Box
+          className="button-container"
+        >
+          <Button
+            type="submit"
+            sx={{ width: '25%', p: 1.5, m: 1, fontSize: '16px', fontWeight: 600 }}
+
+            variant="contained">Submit</Button>
+        </Box>
+      </Box>
+    </Box>
+  );
+
+  return (
+    <Box
+      className="backImage"
+
+    >
+      <Grid container
+        spacing={3}
+        sx={{
+          height: '100vh'
+        }}
+      >
+        <Grid item
+          sx={{ margin: 'auto' }}
+
+          xs={12} sm={12} lg={4} md={4}>
+          <Box
+            sx={{
+              borderRadius: '10px',
+              boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
+              backgroundColor: 'white',
+              padding: '2rem',
+            }}
+            className="login-form">
+            <Box className="title">Sign In</Box>
+            {isSubmitted ?
+              // navigate('/home')
+              <Box>User is successfully logged in</Box>
+              :
+              renderForm}
+
+            <Box>
+              <Typography>
+                if not registered! <Link underline="none" href='/registration'>Register here</Link>
+              </Typography>
+            </Box>
+          </Box>
+        </Grid>
+      </Grid>
+    </Box>
+
+  );
+}
+
+export default SignInPage;
