@@ -62,11 +62,24 @@ const Event = () => {
     const [eventHeading, setEventHeading] = useState('')
     const [eventDateTime, setEventDateTime] = useState(new Date())
     const [eventPara, setEventPara] = useState('')
+    const [data, setData] = useState([])
     const handleSubmit = () => {
         const userName = localStorage.getItem('registrationFormData')
         const name = JSON.parse(userName)
-        console.log('nnnn',name)
-        localStorage.setItem('eventData', JSON.stringify([{
+        console.log('nnnn', name)
+        setData(() => [...data, {
+            'name': name?.name,
+            'eventHeading': eventHeading,
+            'eventDateTime': eventDateTime,
+            'eventPara': eventPara
+        }])
+        // localStorage.setItem('eventData', JSON.stringify([{
+        //     'name': name?.name,
+        //     'eventHeading': eventHeading,
+        //     'eventDateTime': eventDateTime,
+        //     'eventPara': eventPara
+        // }]))
+        localStorage.setItem('eventData', JSON.stringify([...data, {
             'name': name?.name,
             'eventHeading': eventHeading,
             'eventDateTime': eventDateTime,
@@ -79,7 +92,7 @@ const Event = () => {
     }
     const eventData = localStorage.getItem('eventData')
     const dataEvent = JSON.parse(eventData)
-    console.log('event data',JSON.parse(eventData))
+    console.log('event data', JSON.parse(eventData), data)
     return <>
         <Box>
             <Box
@@ -106,7 +119,7 @@ const Event = () => {
                     }}
                 >Up-Coming Event-</Typography>
                 <SliderImage
-                    eventData={dataEvent}
+                    eventData={data}
                     img1={Img1}
                     img2={Img2}
                     img3={Img3}
@@ -143,7 +156,7 @@ const Event = () => {
             >
                 <Box sx={style}>
                     <Box sx={{ margin: '0px 0 20px 0' }}>
-                        <Typography sx={{ fontSize: '20px',fontWeight:600 }}>Create Event</Typography>
+                        <Typography sx={{ fontSize: '20px', fontWeight: 600 }}>Create Event</Typography>
                     </Box>
                     <Box>
 
