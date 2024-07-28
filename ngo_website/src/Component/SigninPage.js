@@ -22,17 +22,12 @@ const SignInPage = () => {
   };
   const userFormData = localStorage.getItem(('registrationFormData'))
   const formData = JSON.parse(userFormData)
-  console.log('userData', JSON.parse(userFormData))
   // User Login info
   const database = [
     {
       username: formData?.email || formData?.mobileNumber,
       password: formData?.password
     },
-    // {
-    //   username: "user2",
-    //   password: "pass2"
-    // }
   ];
 
   const errors = {
@@ -43,23 +38,18 @@ const SignInPage = () => {
   const handleSubmit = (event) => {
     //Prevent page reload
     event.preventDefault();
-    console.log('entered valie os', userName, password)
     // Find user login info
     const userData = database.find((user) => {
-      console.log('user', user)
       return user.username === (formData?.email || formData?.mobileNumber)
     });
-    console.log('userddd', userData)
     // Compare user info
     if ((userData?.username === userName)) {
       if (userData?.password === password) {
         setIsSubmitted(true)
         navigate('/home')
         sessionStorage.setItem('isLogin', Boolean(true))
-        console.log('yaha nh aa rha', password)
       } else {
         setErrorMessages({ name: 'pass', message: errors.pass })
-        console.log('yaha aa rha', password)
 
       }
     } else {
@@ -162,7 +152,12 @@ const SignInPage = () => {
         >
           <Button
             type="submit"
-            sx={{ width: '25%', p: 1.5, m: 1, fontSize: '16px', fontWeight: 600 }}
+            sx={{ 
+              width: 'auto', 
+              p: 1.5, m: 1, 
+              fontSize: '16px',
+               fontWeight: 600 
+              }}
 
             variant="contained">Submit</Button>
         </Box>
@@ -173,30 +168,33 @@ const SignInPage = () => {
   return (
     <Box
       className="backImage"
-
+      sx={{ height: { lg: '0', md: '100vh', sm: '100vh', xs: '100vh' } }}
     >
       <Grid container
         spacing={3}
         sx={{
-          height: '100vh'
+          height: { lg: '100vh', xs: '0' }
         }}
       >
         <Grid item
-          sx={{ margin: 'auto' }}
+          sx={{ 
+            margin: {lg:'auto',md:'10% auto',sm:'15% auto',xs:'5% auto'} 
+          }}
 
-          xs={12} sm={12} lg={4} md={4}>
+          xs={12} sm={6} lg={4} md={6}>
           <Box
             sx={{
               borderRadius: '10px',
               boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)',
               backgroundColor: 'white',
               padding: '2rem',
+              margin: { lg: '0px', md: '16px', sm: '16px', xs: '16px' }
             }}
             className="login-form">
             <Box className="title">Sign In</Box>
             {isSubmitted ?
-              // navigate('/home')
-              <Box>User is successfully logged in</Box>
+              navigate('/home')
+              // <Box>User is successfully logged in</Box>
               :
               renderForm}
 

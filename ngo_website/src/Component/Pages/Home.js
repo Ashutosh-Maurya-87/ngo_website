@@ -1,21 +1,15 @@
-import React from "react";
-import Navbar from "../Navbar";
+import React, { useEffect, useMemo } from "react";
 import { Box, Typography } from "@mui/material";
-import SliderImage from "../SliderImage";
-import Img1 from '../../Assets/event_img.jpeg'
-import Img2 from '../../Assets/event_img2.jpeg'
-import Img3 from '../../Assets/event_img3.jpeg'
-import Img4 from '../../Assets/event_img4.jpeg'
-const Home = () => {
+
+const Home = ({ isLogin }) => {
+    useMemo(() => {
+        if (!isLogin) {
+            document.location.reload()
+        }
+    }, [])
     return <>
         <Box
         >
-            {/* <SliderImage
-                img1={Img1}
-                img2={Img2}
-                img3={Img3}
-                img4={Img4}
-            /> */}
             <Box
                 className="homePageMain"
 
@@ -39,8 +33,6 @@ const Home = () => {
 
             </Box>
         </Box >
-        {/* <SliderImage /> */}
-        {/* <Navbar /> */}
     </>
 }
 

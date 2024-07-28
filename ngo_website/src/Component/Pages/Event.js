@@ -63,10 +63,23 @@ const Event = () => {
     const [eventDateTime, setEventDateTime] = useState(new Date())
     const [eventPara, setEventPara] = useState('')
     const handleSubmit = () => {
+        const userName = localStorage.getItem('registrationFormData')
+        const name = JSON.parse(userName)
+        console.log('nnnn',name)
+        localStorage.setItem('eventData', JSON.stringify([{
+            'name': name?.name,
+            'eventHeading': eventHeading,
+            'eventDateTime': eventDateTime,
+            'eventPara': eventPara
+        }]))
+        alert('Event created successfully')
         setOpen(false)
         console.log('sub', eventHeading, eventDateTime, eventPara)
 
     }
+    const eventData = localStorage.getItem('eventData')
+    const dataEvent = JSON.parse(eventData)
+    console.log('event data',JSON.parse(eventData))
     return <>
         <Box>
             <Box
@@ -93,7 +106,7 @@ const Event = () => {
                     }}
                 >Up-Coming Event-</Typography>
                 <SliderImage
-                    eventData={EventData}
+                    eventData={dataEvent}
                     img1={Img1}
                     img2={Img2}
                     img3={Img3}
@@ -102,14 +115,14 @@ const Event = () => {
 
             </Box>
 
-            <Box>
+            {/* <Box>
                 <Typography
-                 sx={{
-                    fontSize: '25px',
-                    fontWeight: 700,
-                    padding: '2% 8%',
-                    backgroundColor: 'aliceblue'
-                }}
+                    sx={{
+                        fontSize: '25px',
+                        fontWeight: 700,
+                        padding: '2% 8%',
+                        backgroundColor: 'aliceblue'
+                    }}
                 >Some examples of events:</Typography>
                 <SliderImage
                     img1={Img1}
@@ -117,7 +130,7 @@ const Event = () => {
                     img3={Img3}
                     img4={Img4}
                 />
-            </Box>
+            </Box> */}
         </Box>
 
         {/* Modal -------- */}
@@ -129,6 +142,9 @@ const Event = () => {
                 aria-describedby="modal-modal-description"
             >
                 <Box sx={style}>
+                    <Box sx={{ margin: '0px 0 20px 0' }}>
+                        <Typography sx={{ fontSize: '20px',fontWeight:600 }}>Create Event</Typography>
+                    </Box>
                     <Box>
 
                         <TextField

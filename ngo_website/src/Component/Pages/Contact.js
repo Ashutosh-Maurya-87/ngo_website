@@ -17,7 +17,7 @@ const Contact = () => {
             <Box
                 component={Paper}
                 sx={{
-                    width: '30%',
+                    width: {lg:'30%',md:'40%',sm:'50%',xs:'90%'},
                     padding: '20px',
                     margin: '5% auto',
                     borderRadius: '20px',

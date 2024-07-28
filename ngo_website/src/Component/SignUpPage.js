@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from 'react-router-dom'
-import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 const SignUpPage = () => {
   // React States
   const [name, setName] = useState('')
@@ -78,23 +77,13 @@ const SignUpPage = () => {
 
     }
 
-    // setName('')
-    // setEmail('')
-    // setMobileNumber('')
-    // setPassword('')
   };
-  console.log('error', error)
   // Generate JSX code for error message
   const renderErrorMessage = (name) =>
     name === errorMessages.name && (
       <div className="error">{errorMessages.message}</div>
     );
 
-  // JSX code for login form
-
-  // const handleSubmit = () => {
-
-  // }
   const renderForm = (
     <>
       <Box
@@ -208,7 +197,6 @@ const SignUpPage = () => {
             sx={{ width: '35%', fontWeight: 600, p: 2, mt: 2, ml: 1 }}
             variant="contained"
             onClick={(e) => handleSubmit(e)}
-          // disabled={(error?.name || error?.mobileNumber || error?.email || error?.password) != '' ? true : false}
           >
             Submit
           </Button>
@@ -221,23 +209,7 @@ const SignUpPage = () => {
         </Box>
       </Box>
     </>
-    // <div className="form">
-    //   <form onSubmit={handleSubmit}>
-    //     <div className="input-container">
-    //       <label>Username </label>
-    //       <input type="text" name="uname" required />
-    //       {renderErrorMessage("uname")}
-    //     </div>
-    //     <div className="input-container">
-    //       <label>Password </label>
-    //       <input type="password" name="pass" required />
-    //       {renderErrorMessage("pass")}
-    //     </div>
-    //     <div className="button-container">
-    //       <input type="submit" />
-    //     </div>
-    //   </form>
-    // </div>
+    
   );
 
   return (

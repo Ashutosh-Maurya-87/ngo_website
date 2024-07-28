@@ -1,7 +1,7 @@
 import { Avatar, Box, Card, CardActions, CardContent, CardHeader, CardMedia, Grid, IconButton, Typography } from "@mui/material";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-
+import moment from 'moment'
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 const SliderImage = (props) => {
     const { img1, img2, img3, img4, eventData } = props
@@ -96,7 +96,48 @@ const SliderImage = (props) => {
                 </Grid>
             </Grid> */}
             <div>
-                <Card
+                {
+                    eventData?.map((item, index) => {
+                        console.log('it', item)
+                        return <Card
+                            className="crousel-card"
+                            key={index}
+                        >
+                            <CardHeader
+                                avatar={
+                                    <Avatar
+                                        // sx={{ bgcolor: red[500] }} 
+                                        aria-label="recipe">
+                                        As
+                                    </Avatar>
+                                }
+                                action={
+                                    <IconButton aria-label="settings">
+                                        <MoreVertIcon />
+                                    </IconButton>
+                                }
+                                title={item?.name}
+                                subheader={moment(item?.eventDateTime).format('YYYY-MM-DD HH:MM')}
+                            />
+                            <CardMedia
+                                component="img"
+                                height="194"
+                                // image="/static/images/cards/paella.jpg"
+                                image={img2}
+                                alt="Paella dish"
+                            />
+                            <CardContent>
+                                <Typography variant="body2" color="text.secondary">
+                                    This impressive paella is a perfect party dish and a fun meal to cook
+                                    together with your guests. Add 1 cup of frozen peas along with the mussels,
+                                    if you like.
+                                </Typography>
+                            </CardContent>
+
+                        </Card>
+                    })
+                }
+                {/* <Card
                     className="crousel-card"
 
                 >
@@ -130,18 +171,11 @@ const SliderImage = (props) => {
                             if you like.
                         </Typography>
                     </CardContent>
-                    {/* <CardActions>
-                        <IconButton aria-label="add to favorites">
-                            favorites
-                        </IconButton>
-                        <IconButton aria-label="share">
-                        </IconButton>
-                    </CardActions> */}
 
-                </Card>
+                </Card> */}
 
             </div>
-            <div>
+            {/* <div>
                 <Card
                     className="crousel-card"
 
@@ -176,13 +210,6 @@ const SliderImage = (props) => {
                             if you like.
                         </Typography>
                     </CardContent>
-                    {/* <CardActions>
-                        <IconButton aria-label="add to favorites">
-                            favorites
-                        </IconButton>
-                        <IconButton aria-label="share">
-                        </IconButton>
-                    </CardActions> */}
 
                 </Card>
 
@@ -222,17 +249,10 @@ const SliderImage = (props) => {
                             if you like.
                         </Typography>
                     </CardContent>
-                    {/* <CardActions>
-                        <IconButton aria-label="add to favorites">
-                            favorites
-                        </IconButton>
-                        <IconButton aria-label="share">
-                        </IconButton>
-                    </CardActions> */}
 
                 </Card>
 
-            </div>
+            </div> */}
         </Carousel>
         {/* </Grid> */}
 
